@@ -1,4 +1,28 @@
 # CHANGELOG
+´
+## [v2.0-evaluacion] - 2026-10-24
+### Agregado
+- `fuentes/evaluacion.ipynb`
+  - matriz de confusión
+  - métricas
+  - ajuste de umbral por costos
+  - ROC/AUC con IC bootstrap
+  - validación cruzada 5x3 con líneas base
+  - pruebas de significancia (t corregida de Nadeau-Bengio y Wilcoxon)
+  - prueba A/B simulada (Z de dos proporciones) 
+  - registro en MLflow (experimento `Churn_Telco_Eval_Actividad6`).
+
+- `evidencias/` 
+  - tablas CSV 
+  - gráficas generadas por el notebook
+
+
+### Sin cambios
+- Datos (`v1.0-datos`) 
+- modelos de la Actividad 5 (`v1.1-modelos`)
+- mismos hiperparámetros 
+- misma partición 80/20
+- semilla 42.
 
 ## [v1.2-entrega] - 2026-10-18
 ### Agregado

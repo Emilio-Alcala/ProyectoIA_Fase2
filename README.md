@@ -62,3 +62,60 @@ Ver `CHANGELOG.md`.
 Etiquetas Git: 
 - `v1.0-datos` 
 - `v1.1-modelos`
+- `v1.2-entrega`
+
+# Actividad 6 – Evaluación y validación de modelos
+
+Continúa de la Actividad 5 (mismos datos y mismos hiperparámetros) 
+
+El business case de la Fase I (supuestos del Excel `PIA - Sierra Movil ROI v2.xlsx`)
+
+## Qué contiene
+```
+datos/datos_limp/telco_churn_limpio.csv    datos limpios de la Actividad 5
+fuentes/evaluacion.ipynb                   notebook completo (ejecutado)
+evidencias/                                tablas CSV y gráficas generadas por el notebook
+requirements.txt  
+CHANGELOG.md
+```
+
+## Cómo reproducir (Windows, PowerShell)
+```powershell
+python -m venv .venv
+.\.venv\Scripts\Activate.ps1
+pip install -r requirements.txt
+cd fuentes
+jupyter notebook evaluacion.ipynb      # Run All, de arriba abajo 
+```
+Se crea `mlflow.db` en la raíz del proyecto. Para ver los experimentos (en otra terminal, desde la raíz del proyecto):
+```powershell
+mlflow ui --backend-store-uri sqlite:///mlflow.db     # http://localhost:5000
+```
+Experimento: `Churn_Telco_Eval_Actividad6`.
+
+## Supuestos (Excel de la Fase I)
+| Parámetro | Valor |
+|---|---|
+| Costo de contacto (C_FP) | $46 MXN |
+| Margen por cliente retenido | 300 × 40 % × 12 = $1,440 MXN |
+| Aceptación × atribución | 0.20 × 0.85 = 0.17 |
+| Beneficio esperado por VP (C_FN) | $244.80 MXN |
+| Umbral teórico | 46 / 244.80 = 0.188 |
+| Capacidad de contacto | 15 % de la base |
+
+## Decisiones principales
+- El umbral se elige con predicciones fuera de muestra del entrenamiento; la prueba se usa una sola vez.
+- Validación cruzada estratificada 5×3, `Pipeline` con escalado y one-hot dentro de cada fold.
+- Líneas base: Dummy, regla "contrato mes a mes" y "contactar a todos".
+- Comparación: t pareada con corrección de Nadeau-Bengio y Wilcoxon.
+- A/B simulado: 40,000 clientes (remuestreo del conjunto de prueba), Z de dos proporciones, 500 réplicas para estimar potencia.
+
+## Resultado resumido (conjunto de prueba)
+* Modelo seleccionado: regresión logística
+* AUC 0.8415
+* umbral 0.188 
+* recall 0.874
+* precisión 0.457
+* $33.44 netos por cliente frente a $25.96 con umbral 0.5
+* A/B con presupuesto igual: 1.04 % vs 1.77 % de retención
+* Z = 6.20, p < 0.001.
