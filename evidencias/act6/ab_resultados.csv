@@ -1,0 +1,5 @@
+Experimento,Grupo,Usuarios,Contactados,Retenidos,Tasa de retención,Neto/cliente (MXN)
+Exp. 1: presupuesto igual (15%),A: estrategia actual,20000,3000,208,0.0104,8.076
+Exp. 1: presupuesto igual (15%),B: modelo,20000,3000,354,0.0177,18.588
+Exp. 2: sin límite de capacidad,A: estrategia actual,20000,11003,803,0.04015,32.5091
+Exp. 2: sin límite de capacidad,B: modelo,20000,10103,744,0.0372,30.3311
